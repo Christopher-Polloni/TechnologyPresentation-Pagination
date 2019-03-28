@@ -1,0 +1,39 @@
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <body>
+    <div>
+      <a href="{{ url_for('index') }}"> Home </a><br><br>
+
+      <b>Page {{messages.page}} of {{messages.pages}}<br>
+        Total Messages: {{messages.total}}</b><br><br>
+
+      {% for m in messages.items %}
+        Message {{m.id}}<br>
+        <b>{{m.username}}</b> said: </br>{{m.message}}<br></br>
+      {% endfor %}
+
+      {% if messages.has_prev %}
+      <a href="{{ url_for('user_posts', username=username, page=messages.prev_num) }}">  <i class="fas fa-arrow-left fa-3x"></i></a>
+      {% endif %}
+
+      {% for page in messages.iter_pages(left_edge=1, left_current=1, right_current=2, right_edge=1) %}
+
+        {% if page %}
+          {% if messages.page == page %}
+            <a class="btn btn-info mb-4" href="{{ url_for('user_posts', username=username, page=page) }}">{{ page }}</a>
+          {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('user_posts', username=username, page=page) }}">{{ page }}</a>
+          {% endif %}
+        {% else %}
+          ...
+        {% endif %}
+      {% endfor %}
+
+      {% if messages.has_next %}
+      <a href="{{ url_for('user_posts', username=username, page=messages.next_num) }}">  <i class="fas fa-arrow-right fa-3x"></i></a>
+      {% endif %}
+    </div>
+  </body>
+</html>
