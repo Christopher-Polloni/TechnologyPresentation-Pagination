@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <div>
+      <form action="{{ url_for('index') }}" method="post">
+        Name<br>
+        <input type="text" name="username"></input><br>
+        Message<br>
+        <input type="text" name="message"></input><br>
+        <button type="submit"> Submit </button>
+    </div>
+  <body>
+    <div>
+      {% for m in messages %}
+        Message {{m.id}}<br>
+        <b>{{m.username}}</b> said: </br>{{m.message}}<br></br>
+      {% endfor %}
+      {% if newer_url %}
+      <a href="{{ newer_url }}">Newer Messages</a>
+      {% endif %}
+      {% if older_url %}
+      <a href="{{ older_url }}">Older Messages</a>
+      {% endif %}
+    </div>
+  </body>
+</html>
